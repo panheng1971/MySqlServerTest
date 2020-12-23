@@ -17,6 +17,7 @@ namespace MySqlServerTest
         OleDbCommand myComm;
         OleDbDataAdapter myDataAdapter;
         DataSet myDataSet;
+        DataTable myDataTable;
 
         public Form1()
         {
@@ -27,6 +28,7 @@ namespace MySqlServerTest
         private void button1_Click(object sender, EventArgs e)
         {
             myDataSet = new DataSet();
+            myDataTable = new DataTable();
             myConn = new OleDbConnection("Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;User ID=sa;Initial Catalog=TestVb;Data Source=OFFICE\\WINCC");
             myConn.Open();
 
@@ -34,10 +36,12 @@ namespace MySqlServerTest
             myComm = new OleDbCommand(sql, myConn);
             myDataAdapter = new OleDbDataAdapter();
             myDataAdapter.SelectCommand = myComm;
-            myDataAdapter.Fill(myDataSet);
+            myDataAdapter.Fill(myDataTable);
+            //myDataAdapter.Fill(myDataSet,"dog"); //alternative method
 
-            dataGridViewShow.DataSource = myDataSet;
-            dataGridViewShow.DataMember = "table";
+
+            dataGridViewShow.DataSource = myDataTable;
+            //dataGridViewShow.DataMember = "dog"; //alternative method
 
             myConn.Close();
 
